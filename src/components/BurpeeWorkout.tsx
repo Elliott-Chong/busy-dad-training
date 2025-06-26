@@ -21,7 +21,7 @@ export default function BurpeeWorkout() {
     });
     const [useVoice, setUseVoice] = useState(true);
     const { speak } = useSpeechSynthesis();
-    const { playCount, isLoaded: audioLoaded } = useCountSounds();
+    const { playCount, isLoaded: audioLoaded, initializeAudio } = useCountSounds();
 
     const {
         isRunning,
@@ -58,7 +58,11 @@ export default function BurpeeWorkout() {
 
                             <div className="space-y-3">
                                 <Button
-                                    onClick={startWorkout}
+                                    onClick={() => {
+                                        // Initialize audio context on user interaction
+                                        initializeAudio();
+                                        startWorkout();
+                                    }}
                                     className="h-16 w-full rounded-full bg-blue-600 font-semibold text-lg text-white shadow-lg transition-all hover:bg-blue-700 active:scale-[0.98]"
                                     size="lg"
                                 >
@@ -66,6 +70,9 @@ export default function BurpeeWorkout() {
                                 </Button>
                                 <Button
                                     onClick={() => {
+                                        // Initialize audio context first
+                                        initializeAudio();
+                                        
                                         // Test audio counts
                                         if (audioLoaded) {
                                             let count = 1;
@@ -74,7 +81,7 @@ export default function BurpeeWorkout() {
                                                 count++;
                                                 if (count > 5) {
                                                     clearInterval(interval);
-                                                    speak("6", { rate: 1.3, pitch: 1.2 });
+                                                    speak("Test complete", { rate: 1.3, pitch: 1.2 });
                                                 }
                                             }, 600);
                                         } else {
@@ -89,6 +96,10 @@ export default function BurpeeWorkout() {
                                 >
                                     Test Audio ({audioLoaded ? "Ready" : "Loading..."})
                                 </Button>
+                                
+                                <div className="text-center text-sm text-white/60">
+                                    <p>On mobile? Tap "Test Audio" first to enable sound</p>
+                                </div>
                             </div>
                             
                             <Disclaimer />

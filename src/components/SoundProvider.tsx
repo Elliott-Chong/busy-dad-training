@@ -25,6 +25,8 @@ export function SoundProvider({ children }: SoundProviderProps) {
 				"/audio/counts/4.mp3",
 				"/audio/counts/5.mp3",
 			]}
+			// Enable sounds globally
+			enabled={true}
 		>
 			{children}
 		</ReactSoundProvider>

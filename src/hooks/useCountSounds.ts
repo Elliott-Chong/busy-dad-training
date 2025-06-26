@@ -45,9 +45,31 @@ export function useCountSounds() {
 	// Check if all sounds are loaded
 	const isLoaded = Object.values(sounds).every(sound => sound.isLoaded);
 
+	// Initialize audio context by playing a silent sound
+	const initializeAudio = useCallback(() => {
+		// Play each sound silently to unlock audio context
+		Object.values(sounds).forEach(sound => {
+			if (sound.isLoaded) {
+				// Store original volume
+				const originalVolume = sound.volume;
+				// Set volume to 0
+				sound.setVolume(0);
+				// Play silently
+				sound.play();
+				// Stop immediately and restore volume
+				setTimeout(() => {
+					sound.stop();
+					sound.setVolume(originalVolume);
+				}, 50);
+			}
+		});
+		console.log("Audio context initialized");
+	}, [sounds]);
+
 	return {
 		playCount,
 		isLoaded,
+		initializeAudio,
 		sounds,
 	};
 }

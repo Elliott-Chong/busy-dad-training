@@ -245,9 +245,13 @@ export function useBurpeeWorkout(config: WorkoutConfig, useVoice: boolean) {
 		setIsCountingDown(true);
 		setCountdownTime(5);
 		
-		// Announce get ready
+		// Announce get ready and play initial sound to keep audio context active
 		if (useVoice) {
 			speak("Get ready! Starting in 5", { rate: 1.2 });
+			// Also play a count sound to ensure audio context stays active
+			if (audioLoaded) {
+				playCount(5);
+			}
 		} else {
 			playBeep(880, 200);
 		}
