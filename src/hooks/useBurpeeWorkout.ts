@@ -5,7 +5,7 @@ import {
 } from "@/lib/burpee-utils";
 import { useCallback, useRef, useState } from "react";
 import { useAudioContext } from "./useAudioContext";
-import { useCountAudio } from "./useCountAudio";
+import { useCountSounds } from "./useCountSounds";
 import { useSpeechSynthesis } from "./useSpeechSynthesis";
 
 export function useBurpeeWorkout(config: WorkoutConfig, useVoice: boolean) {
@@ -31,7 +31,7 @@ export function useBurpeeWorkout(config: WorkoutConfig, useVoice: boolean) {
 
 	const { playBeep } = useAudioContext();
 	const { speak, cancel: cancelSpeech } = useSpeechSynthesis();
-	const { playCount, isLoaded: audioLoaded } = useCountAudio();
+	const { playCount, isLoaded: audioLoaded } = useCountSounds();
 
 	const stopWorkout = useCallback(() => {
 		setIsRunning(false);

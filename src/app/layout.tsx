@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
+import { SoundProvider } from "@/components/SoundProvider";
 
 export const metadata: Metadata = {
 	title: "Burpee Workout Timer",
@@ -37,7 +38,11 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={`${geist.variable}`}>
 			<body>
-				<TRPCReactProvider>{children}</TRPCReactProvider>
+				<TRPCReactProvider>
+					<SoundProvider>
+						{children}
+					</SoundProvider>
+				</TRPCReactProvider>
 			</body>
 		</html>
 	);

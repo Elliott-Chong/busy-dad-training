@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useBurpeeWorkout } from "@/hooks/useBurpeeWorkout";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
-import { useCountAudio } from "@/hooks/useCountAudio";
+import { useCountSounds } from "@/hooks/useCountSounds";
 import { type WorkoutConfig, calculatePacing } from "@/lib/burpee-utils";
 import { useState } from "react";
 import { WorkoutConfiguration } from "./WorkoutConfiguration";
@@ -21,7 +21,7 @@ export default function BurpeeWorkout() {
     });
     const [useVoice, setUseVoice] = useState(true);
     const { speak } = useSpeechSynthesis();
-    const { playCount, isLoaded: audioLoaded, initializeAudio } = useCountAudio();
+    const { playCount, isLoaded: audioLoaded } = useCountSounds();
 
     const {
         isRunning,
@@ -58,10 +58,7 @@ export default function BurpeeWorkout() {
 
                             <div className="space-y-3">
                                 <Button
-                                    onClick={() => {
-                                        initializeAudio(); // Initialize audio for mobile
-                                        startWorkout();
-                                    }}
+                                    onClick={startWorkout}
                                     className="h-16 w-full rounded-full bg-blue-600 font-semibold text-lg text-white shadow-lg transition-all hover:bg-blue-700 active:scale-[0.98]"
                                     size="lg"
                                 >
@@ -69,7 +66,6 @@ export default function BurpeeWorkout() {
                                 </Button>
                                 <Button
                                     onClick={() => {
-                                        initializeAudio(); // Initialize audio for mobile
                                         // Test audio counts
                                         if (audioLoaded) {
                                             let count = 1;
