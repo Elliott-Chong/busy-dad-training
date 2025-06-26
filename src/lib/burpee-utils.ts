@@ -28,12 +28,12 @@ export function getCountCallout(count: number): string {
 }
 
 // Fixed duration per count (in seconds)
-export const SECONDS_PER_COUNT = 0.7;
+export const SECONDS_PER_COUNT = 0.65;
 
 export const PACE_SETTINGS = {
-	faster: 0.6,
-	default: 0.7,
-	slower: 0.8,
+	faster: 0.55,
+	default: 0.65,
+	slower: 0.75,
 } as const;
 
 export function calculatePacing(config: WorkoutConfig, useVoice = false) {
