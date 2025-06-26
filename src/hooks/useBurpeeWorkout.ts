@@ -17,6 +17,8 @@ export function useBurpeeWorkout(config: WorkoutConfig, useVoice: boolean) {
 	const [currentSet, setCurrentSet] = useState(1);
 	const [isResting, setIsResting] = useState(false);
 	const [restTimeLeft, setRestTimeLeft] = useState(0);
+	const [countdownTime, setCountdownTime] = useState(0);
+	const [isCountingDown, setIsCountingDown] = useState(false);
 
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 	const countIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -60,28 +62,7 @@ export function useBurpeeWorkout(config: WorkoutConfig, useVoice: boolean) {
 		}
 	}, [playBeep, speak, cancelSpeech, useVoice]);
 
-	const startWorkout = useCallback(() => {
-		// Clean up any existing intervals first
-		if (intervalRef.current) {
-			clearInterval(intervalRef.current);
-			intervalRef.current = null;
-		}
-		if (countIntervalRef.current) {
-			clearInterval(countIntervalRef.current);
-			countIntervalRef.current = null;
-		}
-
-		setIsRunning(true);
-		setIsPaused(false);
-		isRunningRef.current = true;
-		isPausedRef.current = false;
-		setCurrentRep(0);
-		currentRepRef.current = 0;
-		setCurrentCount(0);
-		setCurrentSet(1);
-		setIsResting(false);
-		isRestingRef.current = false;
-		setRestTimeLeft(0);
+	const startActualWorkout = useCallback(() => {
 		startTimeRef.current = Date.now() - pausedTimeRef.current;
 
 		const { msPerCount, restBetweenReps, secondsPerBurpee } = calculatePacing(
@@ -238,6 +219,68 @@ export function useBurpeeWorkout(config: WorkoutConfig, useVoice: boolean) {
 		// Clean up timeout if component unmounts
 		return () => clearTimeout(startDelay);
 	}, [config, playBeep, speak, useVoice, stopWorkout, audioLoaded, playCount]);
+	
+	const startWorkout = useCallback(() => {
+		// Clean up any existing intervals first
+		if (intervalRef.current) {
+			clearInterval(intervalRef.current);
+			intervalRef.current = null;
+		}
+		if (countIntervalRef.current) {
+			clearInterval(countIntervalRef.current);
+			countIntervalRef.current = null;
+		}
+
+		setIsRunning(true);
+		setIsPaused(false);
+		isRunningRef.current = true;
+		isPausedRef.current = false;
+		setCurrentRep(0);
+		currentRepRef.current = 0;
+		setCurrentCount(0);
+		setCurrentSet(1);
+		setIsResting(false);
+		isRestingRef.current = false;
+		setRestTimeLeft(0);
+		setIsCountingDown(true);
+		setCountdownTime(5);
+		
+		// Announce get ready
+		if (useVoice) {
+			speak("Get ready! Starting in 5", { rate: 1.2 });
+		} else {
+			playBeep(880, 200);
+		}
+		
+		// Start countdown
+		let countdown = 5;
+		const countdownInterval = setInterval(() => {
+			countdown--;
+			setCountdownTime(countdown);
+			
+			if (countdown > 0) {
+				if (useVoice) {
+					speak(countdown.toString(), { rate: 1.3 });
+				} else {
+					playBeep(440, 100);
+				}
+			} else {
+				// Countdown finished, start the actual workout
+				clearInterval(countdownInterval);
+				setIsCountingDown(false);
+				setCountdownTime(0);
+				
+				if (useVoice) {
+					speak("Go!", { rate: 1.3, pitch: 1.2 });
+				} else {
+					playBeep(1320, 300);
+				}
+				
+				// Start the actual workout
+				startActualWorkout();
+			}
+		}, 1000);
+	}, [useVoice, playBeep, speak, startActualWorkout]);
 
 	const pauseWorkout = useCallback(() => {
 		const newPausedState = !isPaused;
@@ -260,6 +303,8 @@ export function useBurpeeWorkout(config: WorkoutConfig, useVoice: boolean) {
 		currentSet,
 		isResting,
 		restTimeLeft,
+		countdownTime,
+		isCountingDown,
 		startWorkout,
 		pauseWorkout,
 		stopWorkout,

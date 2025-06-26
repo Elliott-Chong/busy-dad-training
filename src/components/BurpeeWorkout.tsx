@@ -32,6 +32,8 @@ export default function BurpeeWorkout() {
         currentSet,
         isResting,
         restTimeLeft,
+        countdownTime,
+        isCountingDown,
         startWorkout,
         pauseWorkout,
         stopWorkout,
@@ -97,21 +99,36 @@ export default function BurpeeWorkout() {
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            <WorkoutDisplay
-                                currentRep={currentRep}
-                                currentCount={currentCount}
-                                timeElapsed={timeElapsed}
-                                duration={config.duration}
-                                isResting={isResting}
-                                restTimeLeft={restTimeLeft}
-                                currentSet={currentSet}
-                                totalSets={config.setsConfig?.sets}
-                                mode={config.mode}
-                                targetReps={config.targetReps}
-                                config={config}
-                                useVoice={useVoice}
-                            />
-                            <WorkoutControls isPaused={isPaused} onPause={pauseWorkout} onStop={stopWorkout} />
+                            {isCountingDown ? (
+                                <div className="flex items-center justify-center min-h-[400px]">
+                                    <div className="text-center">
+                                        <div className="text-9xl font-bold text-white mb-4">
+                                            {countdownTime || "Go!"}
+                                        </div>
+                                        <div className="text-2xl text-white/70">
+                                            Get Ready!
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <WorkoutDisplay
+                                        currentRep={currentRep}
+                                        currentCount={currentCount}
+                                        timeElapsed={timeElapsed}
+                                        duration={config.duration}
+                                        isResting={isResting}
+                                        restTimeLeft={restTimeLeft}
+                                        currentSet={currentSet}
+                                        totalSets={config.setsConfig?.sets}
+                                        mode={config.mode}
+                                        targetReps={config.targetReps}
+                                        config={config}
+                                        useVoice={useVoice}
+                                    />
+                                    <WorkoutControls isPaused={isPaused} onPause={pauseWorkout} onStop={stopWorkout} />
+                                </>
+                            )}
                         </div>
                     )}
                 </div>
