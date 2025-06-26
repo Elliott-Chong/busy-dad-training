@@ -1,0 +1,37 @@
+{
+	"baseUrl": "/audio",
+	"counts": {
+		"1": "/audio/counts/1.wav",
+		"2": "/audio/counts/2.wav",
+		"3": "/audio/counts/3.wav",
+		"4": "/audio/counts/4.wav",
+		"5": "/audio/counts/5.wav"
+	},
+	"reps": {
+		"6": "/audio/reps/6.wav",
+		"7": "/audio/reps/7.wav",
+		"8": "/audio/reps/8.wav",
+		"9": "/audio/reps/9.wav",
+		"10": "/audio/reps/10.wav",
+		"11": "/audio/reps/11.wav",
+		"12": "/audio/reps/12.wav",
+		"13": "/audio/reps/13.wav",
+		"14": "/audio/reps/14.wav",
+		"15": "/audio/reps/15.wav",
+		"16": "/audio/reps/16.wav",
+		"17": "/audio/reps/17.wav",
+		"18": "/audio/reps/18.wav",
+		"19": "/audio/reps/19.wav",
+		"20": "/audio/reps/20.wav",
+		"30": "/audio/reps/30.wav",
+		"40": "/audio/reps/40.wav",
+		"50": "/audio/reps/50.wav",
+		"60": "/audio/reps/60.wav",
+		"70": "/audio/reps/70.wav",
+		"75": "/audio/reps/75.wav",
+		"80": "/audio/reps/80.wav",
+		"90": "/audio/reps/90.wav",
+		"100": "/audio/reps/100.wav",
+		"125": "/audio/reps/125.wav"
+	}
+}
