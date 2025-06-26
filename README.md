@@ -1,29 +1,133 @@
-# Create T3 App
+# Busy Dad Training - Burpee Workout App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+An unofficial web app inspired by the [Busy Dad Training](https://busydadtraining.com/) YouTube burpee workouts. This app helps you follow along with burpee workouts using real audio clips from the training videos.
 
-## What's next? How do I make an app with this?
+**Disclaimer**: This is a hobby project and I am not affiliated with the official Busy Dad Training program.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- ⏱️ **Timed Workouts**: Set duration and target reps
+- 🎤 **Real Audio Counts**: Uses actual trainer voice clips for counts 1-5
+- 📢 **Voice Callouts**: Hear rep numbers and count callouts
+- 📊 **Progress Tracking**: Visual progress bars for reps and time
+- ⏸️ **Pause/Resume**: Control your workout as needed
+- 📱 **Mobile Optimized**: Works great as a PWA on phones
+- 🌙 **Dark Theme**: Easy on the eyes during workouts
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Tech Stack
 
-## Learn More
+- **Framework**: [Next.js 14](https://nextjs.org) with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS with glass-morphism design
+- **Audio**: Web Audio API with real voice clips
+- **Runtime**: Bun (also works with Node.js)
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Getting Started
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Prerequisites
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- [Bun](https://bun.sh) (recommended) or Node.js 18+
+- Git
 
-## How do I deploy this?
+### Installation
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+1. Clone the repository:
+```bash
+git clone https://github.com/elliott-chong/busy-dad-training.git
+cd busy-dad-training
+```
+
+2. Install dependencies:
+```bash
+bun install
+# or npm install
+```
+
+3. Run the development server:
+```bash
+bun run dev
+# or npm run dev
+```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Building for Production
+
+```bash
+bun run build
+bun run start
+# or npm run build && npm run start
+```
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js app router pages
+├── components/             # React components
+│   ├── BurpeeWorkout.tsx   # Main workout component
+│   ├── WorkoutDisplay.tsx  # Workout UI during exercise
+│   └── WorkoutConfiguration.tsx # Settings UI
+├── hooks/                  # Custom React hooks
+│   ├── useBurpeeWorkout.ts # Workout logic
+│   └── useCountAudio.ts    # Audio playback
+└── lib/                    # Utility functions
+public/
+└── audio/
+    └── counts/             # Voice count audio files (1-5)
+```
+
+## Contributing
+
+Contributions are welcome! Here are some ways you can help:
+
+- 🐛 Report bugs and issues
+- 💡 Suggest new features
+- 🔧 Submit pull requests
+- 📝 Improve documentation
+- ⭐ Star the repository
+
+### Development Guidelines
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run checks:
+   ```bash
+   bun run typecheck
+   biome check
+   ```
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to your branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## Ideas for Contributions
+
+- 🎨 Additional workout modes (EMOM, Tabata, etc.)
+- 📈 Workout history and statistics
+- 🌍 Internationalization support
+- 🎵 Custom sound packs
+- 🤖 AI-powered form tips
+- 📲 Native mobile apps
+- 🏆 Achievements and gamification
+
+## Deployment
+
+The app can be deployed to any platform that supports Next.js:
+
+- **Vercel** (recommended): [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/elliott-chong/busy-dad-training)
+- **Netlify**: Works with the Next.js adapter
+- **Self-hosted**: Use `bun run build` and serve with `bun run start`
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Acknowledgments
+
+- Thanks to [Busy Dad Training](https://busydadtraining.com/) for the workout inspiration
+- Audio clips extracted from publicly available YouTube videos for educational purposes
+
+---
+
+**Note**: Always consult with a healthcare provider before starting any new exercise program.

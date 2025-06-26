@@ -9,6 +9,7 @@ import { useState } from "react";
 import { WorkoutConfiguration } from "./WorkoutConfiguration";
 import { WorkoutControls } from "./WorkoutControls";
 import { WorkoutDisplay } from "./WorkoutDisplay";
+import { Disclaimer } from "./Disclaimer";
 
 export default function BurpeeWorkout() {
     const [config, setConfig] = useState<WorkoutConfig>({
@@ -91,6 +92,8 @@ export default function BurpeeWorkout() {
                                     Test Audio ({audioLoaded ? "Ready" : "Loading..."})
                                 </Button>
                             </div>
+                            
+                            <Disclaimer />
                         </div>
                     ) : (
                         <div className="space-y-4">
