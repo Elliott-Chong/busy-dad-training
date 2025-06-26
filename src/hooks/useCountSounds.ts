@@ -1,8 +1,7 @@
 import { useSound } from "react-sounds";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 
 // Custom count sounds mapping
-// Since react-sounds doesn't have number sounds, we'll use our own audio files
 const COUNT_SOUNDS = {
 	1: "/audio/counts/1.mp3",
 	2: "/audio/counts/2.mp3",
@@ -12,12 +11,15 @@ const COUNT_SOUNDS = {
 } as const;
 
 export function useCountSounds() {
-	// Initialize all count sounds
-	const count1 = useSound(COUNT_SOUNDS[1], { volume: 1.0 });
-	const count2 = useSound(COUNT_SOUNDS[2], { volume: 1.0 });
-	const count3 = useSound(COUNT_SOUNDS[3], { volume: 1.0 });
-	const count4 = useSound(COUNT_SOUNDS[4], { volume: 1.0 });
-	const count5 = useSound(COUNT_SOUNDS[5], { volume: 1.0 });
+	// Initialize all count sounds at full volume
+	const count1 = useSound(COUNT_SOUNDS[1]);
+	const count2 = useSound(COUNT_SOUNDS[2]);
+	const count3 = useSound(COUNT_SOUNDS[3]);
+	const count4 = useSound(COUNT_SOUNDS[4]);
+	const count5 = useSound(COUNT_SOUNDS[5]);
+	
+	// Track if we've initialized
+	const initialized = useRef(false);
 
 	const sounds = {
 		1: count1,
@@ -45,24 +47,23 @@ export function useCountSounds() {
 	// Check if all sounds are loaded
 	const isLoaded = Object.values(sounds).every(sound => sound.isLoaded);
 
-	// Initialize audio context by playing a silent sound
+	// Initialize audio context by playing a quick sound
 	const initializeAudio = useCallback(() => {
-		// Play each sound silently to unlock audio context
-		Object.values(sounds).forEach(sound => {
-			if (sound.isLoaded) {
-				// Store original volume
-				const originalVolume = sound.volume;
-				// Set volume to 0
-				sound.setVolume(0);
-				// Play silently
-				sound.play();
-				// Stop immediately and restore volume
-				setTimeout(() => {
-					sound.stop();
-					sound.setVolume(originalVolume);
-				}, 50);
-			}
-		});
+		if (initialized.current) {
+			console.log("Audio already initialized");
+			return;
+		}
+		
+		// Just play and immediately stop the first sound to unlock audio
+		if (sounds[1].isLoaded) {
+			sounds[1].play();
+			// Use a very short timeout to stop
+			setTimeout(() => {
+				sounds[1].stop();
+			}, 1);
+		}
+		
+		initialized.current = true;
 		console.log("Audio context initialized");
 	}, [sounds]);
 
