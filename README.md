@@ -1,9 +1,9 @@
-<img width="444" alt="image" src="https://github.com/user-attachments/assets/136003df-82b8-446f-9679-ae03ad885929" />
-
 
 # Busy Dad Training - Burpee Workout App
 
 https://youtu.be/tvnW185Vd8A
+
+<img width="444" alt="image" src="https://github.com/user-attachments/assets/136003df-82b8-446f-9679-ae03ad885929" />
 
 An unofficial web app inspired by the [Busy Dad Training](https://busydadtraining.com/) YouTube burpee workouts. This app helps you follow along with burpee workouts using real audio clips from the training videos.
 
